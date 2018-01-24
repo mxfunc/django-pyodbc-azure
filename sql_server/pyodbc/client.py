@@ -35,12 +35,14 @@ class DatabaseClient(BaseDatabaseClient):
                 args += ["-d", db]
             if defaults_file:
                 args += ["-i", defaults_file]
+            shell = False
         else:
             dsn = options.get('dsn', '')
             args = ['%s -v %s %s %s' % (self.executable_name, dsn, user, password)]
+            shell = True
 
         import subprocess
         try:
-            subprocess.call(args, shell=True)
+            subprocess.call(args, shell=shell)
         except KeyboardInterrupt:
             pass
